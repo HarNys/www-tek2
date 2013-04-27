@@ -12,7 +12,11 @@
 
 	$projectID = $_GET['id'];
 
-	$sql = " SELECT * FROM projects WHERE id = '$projectID'  ";
+	$sql = " SELECT projects.* , externalusers.companyname
+			 FROM projects, externalusers
+			 WHERE projects.id = '$projectID' AND
+			 externalusers.id = '$projectID' ";
+
 	$sth = $db->prepare ($sql);
 	$sth->execute();
 
@@ -20,7 +24,7 @@
 
 	echo "<h1>" . $project['title'] . "</h1>";
 	echo "<br>";
-	echo "Eier: " . $project['owner'];
+	echo "Bedrift/Eier: " . $project['companyname'];
 	echo "<br>";
 	echo $project['description'];
 
