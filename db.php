@@ -1,7 +1,11 @@
 <?php
 try {
-	$db = new PDO('mysql:host=127.0.0.1;dbname=bachelor_thesis', 'root', '');
-} catch (PDOException $e) {
-    die ('Kunne ikke koble til serveren : ' . $e->getMessage());
-}
+
+	$temp = file_get_contents("pw.txt");
+	$pw = explode(" ",$temp);
+	$db = new PDO('mysql:host=95.34.97.5;dbname='."$pw[0]", "$pw[0]","$pw[1]");
+	} catch (PDOException $e) 
+	{
+    	die ('Kunne ikke koble til serveren : ' . $e->getMessage());
+	}
 ?>
