@@ -26,6 +26,20 @@ $(document).ready (function () {
 		return false;
 	});
 	
+	// Displays all projects
+	$('#projectsOverview').click (function() 
+	{
+		$('body > section').load ('pages/projectsOverview.php');
+		return false;
+	});
+
+	// Displays all information about a single project
+	// $('.showProjectInfo').click (function() 
+	// {
+	// 	$('body > section').load ('pages/showProjectInfo.php?id=' + this.id));
+	// 	return false;
+	// });
+
 	$('#login').click (function() {			// Show login dialog box
 		showLoginDialog ();
 		// Prevent the link from being followed.
