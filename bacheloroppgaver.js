@@ -34,11 +34,11 @@ $(document).ready (function () {
 	});
 
 	// Displays all information about a single project
-	$('.showProjectInfo').click (function() 
-	{
-		$('body > section').load ('pages/showProjectInfo.php?id=' + $(this).attr('id'));
-		return false;
-	});
+	// $('.showProjectInfo').click (function() 
+	// {
+	// 	$('body > section').load ('pages/showProjectInfo.php?id=' + this.id));
+	// 	return false;
+	// });
 
 	$('#login').click (function() {			// Show login dialog box
 		showLoginDialog ();

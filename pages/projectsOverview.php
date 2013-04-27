@@ -25,10 +25,19 @@
 		{
 			echo "Oppdragsgiver: " . $row['owner'];
 			echo "<br />";
-			echo "<a class = 'showProjectInfo' id='" . $row['id'] . " ' href = ''>" . $row['title'] . "</a>";
+			echo "<a class='showProjectInfo' id='" . $row['id'] . "' href = ''>" . $row['shortTitle'] . "</a>";
 		}
 	}
 
-	
-
 ?>
+
+<script> 
+
+ 	$('.showProjectInfo').click (function() 
+ 	{
+ 		// alert($(this).attr('id'));
+ 		$('body > section').load('pages/showProjectInfo.php?id=' + this.id);
+ 		return false;
+ 	});
+ 
+</script>
