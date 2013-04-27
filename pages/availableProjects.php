@@ -8,7 +8,7 @@
 	$sql = "SELECT externalusers.id, projects.owner,projects.id, projects.title, projects.shortTitle, projects.description,externalusers.companyname
 			FROM projects
 			LEFT JOIN externalusers ON projects.owner = externalusers.id 
-			WHERE projects.status LIKE 'approved'";//
+			WHERE projects.status LIKE 'cleared'";
 			
 	$stmt = $db->prepare($sql);
 	$stmt->execute();
@@ -17,7 +17,6 @@
 	if ($stmt->rowCount()!=0)
 	{
 		echo "<h1>Oppgaver:</h1>";
-		$num = 0;
 		
 		//for hver oppgave
 		foreach($stmt->fetchAll() as $row)

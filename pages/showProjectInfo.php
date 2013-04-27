@@ -27,5 +27,7 @@
 	echo "Bedrift/Eier: " . $project['companyname'];
 	echo "<br>";
 	echo $project['description'];
-
+	
+	echo "<a id = 'comment' href=' '> Kommenter </a>";
+//comment
 ?>
