@@ -19,6 +19,12 @@ $(document).ready (function () {
 			}
 		}
 	});
+
+	//Display student group information
+	$('#myGroup').click (function() {
+		$('body > section').load('pages/createStudentGroup.php');
+		return false;
+	});
 	
 	// Display published and reviewed projects
 	$('#showPublic').click (function() {

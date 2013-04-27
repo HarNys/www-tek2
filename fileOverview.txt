@@ -2,6 +2,7 @@ Folder structure and file usage
 
 dialogs									// Content for all dialogs is found here
 	collegiumCommentsForProject.php			// Display comments from the collegium for a single project
+	createStudentGroup.php					// Script used to create a new student group
 	login.php								// The login form
 	newExternal.php							// The create new external user form
 	studentGroupForProject.php				// Display students and group information for a project (uses https://tvil.hig.no/json_services/getUserDetails.php)
