@@ -2,7 +2,6 @@ Folder structure and file usage
 
 dialogs									// Content for all dialogs is found here
 	collegiumCommentsForProject.php			// Display comments from the collegium for a single project
-	createStudentGroup.php					// Script used to create a new student group
 	login.php								// The login form
 	newExternal.php							// The create new external user form
 	studentGroupForProject.php				// Display students and group information for a project (uses https://tvil.hig.no/json_services/getUserDetails.php)
@@ -34,13 +33,16 @@ LnF										// All look and feel related items
 	RedFlag.png								// Icon representing a project that the collegium feels need more work
 	Users.png								// Icon representing a project that has been assigned to a project group
 pages									// All content shown in the main part of the layout is loaded from files in this folder
+	addGroupMember.php							// Script to add a student to a student group. Accessed from showStudentGroup.php
 	availableProjects.php					// Display a list of available projects (project that students can choose amongst) NOTE! Not implemented :)
 	companyPresentation.php					// Presentation of an external user (company), NOTE! should probably be rewamped
+	createStudentGroup.php					// Script used to create a new student group. Accessed from showStudentGroup.php
 	editProject.php							// Contains functionality to edit a project
 	externalUserEditInfo.php				// Contains functionality to edit information about an external user (company)
 	externalUserFiles.php					// Contains functionality to list and upload files for an external user, NOTE, need the option to delete files
 	externalUserProjects.php				// Contains functionality to list project for an external user
 	newProject.php							// Contains functionality to create a new project
+	showStudentGroup.php					// Script used to show information about the group the user(student) is a member of. If not member of a group show form to create group.
 	welcome.html							// Contains the HTML that will be loaded upon page load if no user is logged in
 	welcomeExternal.html					// Contains the HTML that will be loaded upon page load is an external user is logged in
 tinymce									// All tinymce editor files

@@ -22,7 +22,7 @@ $(document).ready (function () {
 
 	//Display student group information
 	$('#myGroup').click (function() {
-		$('body > section').load('pages/createStudentGroup.php');
+		$('body > section').load('pages/showStudentGroup.php');
 		return false;
 	});
 	
