@@ -52,17 +52,12 @@ $(document).ready (function () {
 		// Prevent the link from being followed.
 		return false;
 	});
+	
 	$('#login').next().click (function() {	// The "Opprett bruker" link, create new external user
 		showNewExternalUserDialog ();
 		return false;
 	});
-	
-	$('#comment').click (function() {			// Show commenting dialog box
-		showCommentDialog();
-		// Prevent the link from being followed.
-		return false;
-	});
-	
+
 	
 	$('.external').next().children('ul > li:nth-child(1)').click (function() {	// External user, list projects
 		$('body > section').load ('pages/externalUserProjects.php');
@@ -222,50 +217,6 @@ function createNewExternal (form) {
 }
 
 
-function showCommentDialog() {
-	// Create a new dialog
-	var dialog = $('<div></div>').load('dialogs/commentOnProject.php', function () {
-		$('.newExternal textarea.tinymce').tinymce({
-			language : 'nb', 
-			// Location of TinyMCE script
-			script_url : 'tinymce/jscripts/tiny_mce/tiny_mce_gzip.php',
-
-			// General options
-			theme : "advanced",
-			plugins : "pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,advlist,spellchecker",
- 
-			// Theme options
-			theme_advanced_buttons1 : "spellchecker,iespell,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,formatselect,|,forecolor,backcolor",
-			theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image",
-			theme_advanced_buttons3 : "",
-			theme_advanced_toolbar_location : "top",
-			theme_advanced_toolbar_align : "left",
-			theme_advanced_statusbar_location : "bottom",
-			theme_advanced_resizing : true,
- 
-			spellchecker_languages : "Norwegian=no,+English=en",
-
-			// Example content CSS (should be your site CSS)
-			content_css : "higstyles.css",
- 
-			// Drop lists for link/image/media/template dialogs
-			template_external_list_url : "lists/template_list.js",
-			external_link_list_url : "lists/link_list.js",
-			external_image_list_url : "lists/image_list.js",
-			media_external_list_url : "lists/media_list.js",
-			//file_browser_callback : 'tinyFileBrowser'
-		});
-	}).dialog({
-		autoOpen: true,
-		position: [200,100],
-		width: 550,
-		title: 'Kommenter på et prosjekt.',
-		close: function (event, ui) {
-			$(this).remove();
-		}
-	});
-}
-
 
 /**
  * Used to allow the user to insert local (from database) links
@@ -410,3 +361,5 @@ function loginExternal (uname, pwd) {
 		}
 	});
 }
+
+

@@ -9,7 +9,8 @@
 	// Connect to the database
 	require_once ("../db.php");
 
-	$sql = ' SELECT * FROM projects ';
+	$sql = ' SELECT title, owner, shortTitle, projects.id , companyname  
+			FROM projects  LEFT JOIN externalusers ON projects.owner = externalusers.id';
 	$sth = $db->prepare ($sql);
 	$sth->execute();
 	
@@ -23,9 +24,9 @@
 
 		foreach( $result as $row )
 		{
-			echo "Oppdragsgiver: " . $row['owner'];
+			echo "Oppdragsgiver: " . $row['companyname'];
 			echo "<br />";
-			echo "<a class='showProjectInfo' id='" . $row['id'] . "' href = ''>" . $row['shortTitle'] . "</a>";
+			echo "<a class='showProjectInfo' id='" . $row['id'] . "' href = ''>" . $row['title'] . "</a>";
 		}
 	}
 
