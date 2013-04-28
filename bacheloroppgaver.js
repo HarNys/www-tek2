@@ -90,7 +90,14 @@ function showLoginDialog () {
 		$(document).data ('uid', null);		// Clear the uid
 		$(document).data ('userType', null);// Clear the user type
 		updateUI();							// Update the user interface, set back to initial state
+
+		/*Koden over virker ikke som så jeg legger til en linje som fikser loggut*/
+		$.get('json/logout.php');
+
 		return false;
+
+
+		
 	}
 	if (loginDialog == null) {		// If the login dialog has not been previously created
 		// Create and load the content of the login dialog, then make it a dialog
