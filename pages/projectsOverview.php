@@ -9,10 +9,11 @@
 	// Connect to the database
 	require_once ("../db.php");
 
-	$sql = ' SELECT title, owner, shortTitle, projects.id , companyname  
-			FROM projects  LEFT JOIN externalusers ON projects.owner = externalusers.id';
+	$sql = ' SELECT title, owner, shortTitle, projects.id , companyname, comment 
+			FROM projects  LEFT JOIN externalusers ON projects.owner = externalusers.id 
+			LEFT JOIN staffcomments ON staffcomments.projectid = projects.id WHERE uid LIKE ?';
 	$sth = $db->prepare ($sql);
-	$sth->execute();
+	$sth->execute(array($_SESSION['uid']));
 	
 	if ( $sth->rowCount() == 0 )
 	{
@@ -27,6 +28,14 @@
 			echo "Oppdragsgiver: " . $row['companyname'];
 			echo "<br />";
 			echo "<a class='showProjectInfo' id='" . $row['id'] . "' href = ''>" . $row['title'] . "</a>";
+			if($row['comment'] != "")
+			{
+				echo "<br /> <font color = 'green'><b>Du komenterte: </font></b>".$row['comment']." <br />";
+			}
+			else
+			{
+				echo "<br /><font color = 'red'><b> Du har ikke komentert her! </font> </b> <br />";
+			}
 		}
 	}
 
