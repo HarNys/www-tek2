@@ -42,7 +42,7 @@ pages									// All content shown in the main part of the layout is loaded from
 	externalUserFiles.php					// Contains functionality to list and upload files for an external user, NOTE, need the option to delete files
 	externalUserProjects.php				// Contains functionality to list project for an external user
 	newProject.php							// Contains functionality to create a new project
-	showStudentGroup.php					// Script used to show information about the group the user(student) is a member of. If not member of a group show form to create group.
+	showStudentGroup.php					// Script used to show information about the group the user(student) is a member of. If not member of a group, show form to create group.
 	welcome.html							// Contains the HTML that will be loaded upon page load if no user is logged in
 	welcomeExternal.html					// Contains the HTML that will be loaded upon page load is an external user is logged in
 tinymce									// All tinymce editor files

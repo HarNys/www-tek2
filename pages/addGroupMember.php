@@ -7,13 +7,15 @@
 		die ( 'Not logged in as student');
 	}
 
-	$newGroupMember = $db->query("	INSERT INTO 'groupparticipants'
-									SET 'groupid'='".$_POST['groupId']."', 'participantid'='".$_POST['memberId']."'
-								");
+	$sql = "INSERT INTO groupparticipants
+			SET groupid = '".$_POST['groupId']."', participantid = '".$_POST['memberId']."'
+			";
+	$sth = $db->prepare($sql);
+	$sth->execute();
 
-	if($newGroupMemeber) {
-			die("pass");
+	if($sth->rowCount()) {
+			die(json_encode("pass"));
 	} else {
-			die("fail");
+			die(json_encode("fail"));
 	}
 ?>

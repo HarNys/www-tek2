@@ -1,14 +1,19 @@
 <script type="text/javascript">
 	$("#createGroupForm .create").click(function(e) {
 		e.preventDefault();
-
-		var groupName = this.form.groupName.value;
-
 		$.post("pages/createStudentGroup.php", $("#createGroupForm").serialize(), function(result) {
 			if (result == "pass") {
 				$("#createGroup").remove();
-				//$("#showGroup").show();
+				$('body > section').load ('pages/showStudentGroup.php');
 			}
+		}, "json");
+
+	});
+
+	$("#addGroupMemberForm .create").click(function(e) {
+		e.preventDefault();
+		$.post("pages/addGroupMember.php", $("#addGroupMemberForm").serialize(), function(result) {
+			$('body > section').load ('pages/showStudentGroup.php');
 		}, "json");
 
 	});
@@ -24,13 +29,16 @@
 	}
 
 	// Looks to see if the student is already a memeber of a group
-	$getGroup = $db->query("	SELECT 'projectgroups.*'
-								FROM 'groupparticipants'
-								INNER JOIN 'projectgroups' ON 'projectgroups.id' = 'groupparticipants.groupid'
-								WHERE 'groupparticipants.participantid' = '".$_SESSION['uid']."'
-							");
-	if($getGroup->rowCount != 1) {
-		// If the student is not a memmer of a group, display a from to create a new group
+	$sql = "SELECT *
+			FROM groupparticipants
+			INNER JOIN projectgroups ON projectgroups.id = groupparticipants.groupid
+			WHERE groupparticipants.participantid = '".$_SESSION['uid']."'
+			";
+	$sth = $db->prepare($sql);
+	$sth->execute();
+
+	if(!($sth->rowCount())) {
+		// If the student is not a memmber of a group, display a from to create a new group
 		echo"<div id='createGroup'>";
 		echo"<h1>Opprett ny studentgruppe</h1>";
 		echo"<p>Du er ikke medlem av en gruppe. Opprett en ny gryppe eller be om å bli lagt til i en eksisterende gruppe.</p>";
@@ -42,35 +50,52 @@
 		echo"</div>";
 	} else {
 		// If the student is a memeber of a group, display the group name.
-		$group = $getGroup->fetch();
-		$getProject = $db->query("	SELECT 'projects.*' 
-									FROM 'projectrequest'
-									INNER JOIN 'projects' ON 'projects.id' = 'projectrequest.projectid'
-									WHERE 'projectrequest.groupid' = '".$group['id']."' AND 'projectrequest.priority' = 'taken'
-								");
+		$group = $sth->fetch();
+
+		// Get all the members of the group.
+		$sql = "SELECT *
+				FROM groupparticipants
+				INNER JOIN projectgroups ON projectgroups.id = groupparticipants.groupid
+				WHERE groupparticipants.groupid = '".$group['id']."'
+				";
+		$sth = $db->prepare($sql);
+		$sth->execute();
 
 		echo"<div id='showGroup'>";
-		echo"<h1>Gruppeoversikt</h1></br>";
-		echo"<h2>".$group['name']."</h2></br>";
-		// Print out names here!
+		echo"<h2>Gruppeoversikt</h2>";
+		echo"<h3>".$group['name']."</h3>";
+		echo"<p>";
+		foreach ($sth->fetchAll() as $member) {
+			echo"".$member['participantid']."</br>";
+		}
+		echo"</p>";
+		echo"Legg til nytt medlem:</br>";
 		echo"<form id='addGroupMemberForm' method='post'>";
-		echo"<input type='hidden' name='groupId' value='".$group['id']."' /></br>";
+		echo"<input type='hidden' name='groupId' value='".$group['id']."' />";
 		echo"<label for='memberId'>Studentnummer</label>";
 		echo"<input type='text' name='memberId' /></br>";
-		echo"<input type='submit' name='groupSubmit' class='create' value='Opprett' />";
+		echo"<input type='submit' name='groupSubmit' class='create' value='Legg til' />";
 		echo"</form>";
 		echo"</br>";
-		echo"<h2>Prosjektoversikt</h2></br>";
+		echo"<h2>Prosjektoversikt</h2>";
 
-		if($getProject->rowCount()) {
-			$project= $getProject->fetch();
+		// Checks to see if the group has been asigned a project.
+		$sql="	SELECT projects.*
+				FROM projectrequest
+				INNER JOIN projects ON projects.id = projectrequest.projectid
+				WHERE projectrequest.groupid = ".$group['id']." AND projectrequest.priority = 'taken'
+			";
+		$sth = $db->prepare($sql);
+		$sth->execute();
+		if($sth->rowCount()) {
+			$project= $sth->fetch();
 
-			echo"Tittel: '".$project_info['title']."'<br>";
-			echo"Alternativ tittel: '".$project_info['altTitle']."'<br>";
-			echo"Kort tittel: '".$project_info['shortTitle']."'<br>";
+			echo"Tittel: '".$project['title']."'<br>";
+			echo"Alternativ tittel: '".$project['altTitle']."'<br>";
+			echo"Kort tittel: '".$project['shortTitle']."'<br>";
 			echo"</div>";
 		} else {
-			echo"Dere har ikke fått tildelt et prosjekt";
-		}	
+			echo"Dere har ikke fått tildelt et prosjekt enda.";
+		}
 	}
 ?>
