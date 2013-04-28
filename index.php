@@ -34,7 +34,8 @@
 			</nav>
 		</header>
 		<nav role="right hand menu">
-			<ul><li id="login"><a href="">logge på</a></li>
+			<ul><?php session_start ();  if(isset($_SESSION['uid'])) {echo "Logget inn som: ". $_SESSION['uid']. " <br />Som er en:". $_SESSION['type'];} ?>
+				<li id="login"><a href="">logge på</a></li>
 				<li><a href="" title="Eksterne oppdragsgivere må opprette en bruker for å opprette prosjektforslag">Opprett bruker</a></li></ul>
 				<section>Offentlig tilgjengelige funksjoner</section>
 				<ul>

@@ -1,10 +1,5 @@
+<!-- The content for the new external user dialog -->
 <form class="comment" onsubmit="return false;">
-<label for="Text">Kommentar:</label><input type="text" name="comment" title="Skriv inn kommentaren din om prosjektet her"><br/>
-<div class="error">Feil brukernavn/passord, prøv igjen</div>
-<input type="button" value="Lagre kommentar" "/>
+<textarea class="tinymce" name="myComment"></textarea><br />
+<input type="button" value="Kommenter" onclick="javascript:addComment(this.form)"/>
 </form>
-
-<?php
-//onclick="javascript:(this.form)
-?>
-
