@@ -36,7 +36,6 @@
 	echo "<br>";
 	echo $project['description'];
 	
-	
 	$sql ="SELECT comment FROM staffcomments WHERE uid LIKE '$userUID' AND projectid LIKE '$projectID'";
 	$sth->closeCursor();
 	$sth = $db->prepare ($sql);
@@ -70,7 +69,6 @@
 ?>
 
 <script>
-
 	function addComments(form)
 	{
 		var data ={
@@ -104,5 +102,31 @@
 		$('body > section').load('pages/showProjectInfo.php?id=' + this.id);
 		return false;
 	});
+/*function addComments(form)
+{
+	var data ={
+				project : form.project.value,
+				user : form.user.value,
+				comment : form.myComment.value}; 
+
+	$.ajax ({
+		url : 'json/addComment.php',
+		type : 'POST',
+		data : data,
+		success : function (data) {
+			if (data.ok) 
+			{
+				alert ("Kommentar er lagret");
+				$('body > section').load("pages/showProjectInfo.php?id=<?php echo $projectID;?>");
+			}
+			else
+			{
+				alert (data.error);
+			}
+				
+		}
+	});
+
+}*/
 
 </script>

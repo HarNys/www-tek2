@@ -11,6 +11,7 @@
 
 	$sql = ' SELECT title, owner, shortTitle, status, projects.id , companyname 
 			FROM projects  LEFT JOIN externalusers ON projects.owner = externalusers.id';
+
 	$sth = $db->prepare ($sql);
 	$sth->execute();
 	
@@ -23,13 +24,7 @@
 		$result = $sth->fetchAll();
 
 		foreach( $result as $row )
-		{
-			
-			$sql = ' SELECT comment FROM  staffcomments LEFT JOIN projects ON staffcomments.projectid = projects.id 
-					WHERE uid LIKE ? AND projectid LIKE ?';
-
-			
-		
+		{		
 			$stmt = $db->prepare ($sql);
 			$stmt->execute(array($_SESSION['uid'], $row['id']));
 			$comments = $stmt->fetch();
@@ -49,6 +44,7 @@
 			else
 			{
 				echo "<font color = 'red'><b> Du har ikke komentert her! </font> </b> <br /><br /><br />";
+
 			}
 		}
 	}

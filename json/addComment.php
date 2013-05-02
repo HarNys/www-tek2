@@ -12,8 +12,6 @@ header ('Content-type: application/json');
 // Connect to the database
 require_once '../db.php';
 
-
-
 $sql = "SELECT * FROM staffcomments WHERE uid LIKE ?";
 $sth = $db->prepare ($sql);
 $sth->execute (array ($_POST['user']));
@@ -42,8 +40,4 @@ else
 
 
 die (json_encode (array ('ok'=>'OK')));
-
-
-
-//error_log($_POST['user']. " - ". $_POST['project']. " - ". $_POST['comment']); 
 ?>
