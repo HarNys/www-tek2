@@ -24,7 +24,11 @@
 		$result = $sth->fetchAll();
 
 		foreach( $result as $row )
-		{		
+		{	
+
+			$sql = ' SELECT comment FROM  staffcomments LEFT JOIN projects ON staffcomments.projectid = projects.id 
+					WHERE uid LIKE ? AND projectid LIKE ?';
+			
 			$stmt = $db->prepare ($sql);
 			$stmt->execute(array($_SESSION['uid'], $row['id']));
 			$comments = $stmt->fetch();
