@@ -2,20 +2,24 @@
 	$("#createGroupForm .create").click(function(e) {
 		e.preventDefault();
 		$.post("pages/createStudentGroup.php", $("#createGroupForm").serialize(), function(result) {
-			if (result == "pass") {
+			if (result == "group name taken") {
+				window.alert("Gruppe navnet er opptatt.");
+			} else if (result == "pass") {
 				$("#createGroup").remove();
 				$('body > section').load ('pages/showStudentGroup.php');
 			}
 		}, "json");
-
 	});
 
 	$("#addGroupMemberForm .create").click(function(e) {
 		e.preventDefault();
 		$.post("pages/addGroupMember.php", $("#addGroupMemberForm").serialize(), function(result) {
-			$('body > section').load ('pages/showStudentGroup.php');
+			if(result == "in a group") {
+				window.alert("Studenten er allerede i en gruppe.");
+			} else {
+				$('body > section').load ('pages/showStudentGroup.php');
+			}
 		}, "json");
-
 	});
 </script>
 

@@ -22,6 +22,7 @@ $(document).ready (function () {
 
 	//Display student group information
 	$('#myGroup').click (function() {
+		//window.alert("test");
 		$('body > section').load('pages/showStudentGroup.php');
 		return false;
 	});
