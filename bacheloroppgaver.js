@@ -19,6 +19,12 @@ $(document).ready (function () {
 			}
 		}
 	});
+
+	//Display student group information
+	$('#myGroup').click (function() {
+		$('body > section').load('pages/showStudentGroup.php');
+		return false;
+	});
 	
 	// Display published and reviewed projects
 	$('#showPublic').click (function() {
@@ -32,16 +38,19 @@ $(document).ready (function () {
 		$('body > section').load ('pages/projectsOverview.php');
 		return false;
 	});
+	
 
 	$('#login').click (function() {			// Show login dialog box
 		showLoginDialog ();
 		// Prevent the link from being followed.
 		return false;
 	});
+	
 	$('#login').next().click (function() {	// The "Opprett bruker" link, create new external user
 		showNewExternalUserDialog ();
 		return false;
 	});
+
 	
 	$('.external').next().children('ul > li:nth-child(1)').click (function() {	// External user, list projects
 		$('body > section').load ('pages/externalUserProjects.php');
@@ -59,6 +68,7 @@ $(document).ready (function () {
 		$('body > section').load ('pages/externalUserEditInfo.php');
 		return false;
 	});
+	
 });	
 
 /**
@@ -73,7 +83,14 @@ function showLoginDialog () {
 		$(document).data ('uid', null);		// Clear the uid
 		$(document).data ('userType', null);// Clear the user type
 		updateUI();							// Update the user interface, set back to initial state
+
+		/*Koden over virker ikke som så jeg legger til en linje som fikser loggut*/
+		$.get('json/logout.php');
+
 		return false;
+
+
+		
 	}
 	if (loginDialog == null) {		// If the login dialog has not been previously created
 		// Create and load the content of the login dialog, then make it a dialog
@@ -198,6 +215,8 @@ function createNewExternal (form) {
 		}
 	});
 }
+
+
 
 /**
  * Used to allow the user to insert local (from database) links
@@ -342,3 +361,5 @@ function loginExternal (uname, pwd) {
 		}
 	});
 }
+
+

@@ -9,7 +9,8 @@
 	// Connect to the database
 	require_once ("../db.php");
 
-	$sql = ' SELECT * FROM projects ';
+	$sql = ' SELECT title, owner, shortTitle, projects.id , companyname 
+			FROM projects  LEFT JOIN externalusers ON projects.owner = externalusers.id ';
 	$sth = $db->prepare ($sql);
 	$sth->execute();
 	
@@ -23,9 +24,28 @@
 
 		foreach( $result as $row )
 		{
-			echo "Oppdragsgiver: " . $row['owner'];
+			
+			$sql = ' SELECT comment FROM  staffcomments LEFT JOIN projects ON staffcomments.projectid = projects.id WHERE uid LIKE ?';
+		
+			$stmt = $db->prepare ($sql);
+			$stmt->execute(array($_SESSION['uid']));
+			$comments = $stmt->fetch();
+			$stmt -> closeCursor();
+
+			echo " hahaha  ". $comments['comment'];
+
+			echo "Oppdragsgiver: " . $row['companyname'];
 			echo "<br />";
-			echo "<a class='showProjectInfo' id='" . $row['id'] . "' href = ''>" . $row['shortTitle'] . "</a>";
+			echo "<a class='showProjectInfo' id='" . $row['id'] . "' href = ''>" . $row['title'] . "</a>";
+			
+			if($comments['comment'] != "")
+			{
+				echo "<br /> <font color = 'green'><b>Du komenterte: </font></b>".$comments['comment']." <br />";
+			}
+			else
+			{
+				echo "<br /><font color = 'red'><b> Du har ikke komentert her! </font> </b> <br />";
+			}
 		}
 	}
 
