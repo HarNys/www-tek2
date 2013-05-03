@@ -50,7 +50,6 @@ $(document).ready (function () {
 	// 	$('body > section').load ('pages/showProjectInfo.php?id=' + this.id));
 	// 	return false;
 	// });
-
 	$('#login').click (function() {			// Show login dialog box
 		showLoginDialog ();
 		// Prevent the link from being followed.
