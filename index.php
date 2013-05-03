@@ -55,7 +55,7 @@
 				<section class="employee">Oppgaver i forbindelse med bacheloroppgaver</section>
 				<ul>
 					<li id="projectsOverview"><a href="">Vis alle prosjektforslag</a></li>
-					<li id="godkjeningsMote"><a href="">Start godkjenings møte</a></li>
+					<li id="godkjeningsMote"><a href="">Godkjenings av oppgaver</a></li>
 					<li id="tildeling"><a href="">Tildeling av prosjekter til grupper</a></li>
 				</ul>
 		</nav>

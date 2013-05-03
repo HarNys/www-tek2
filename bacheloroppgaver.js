@@ -44,6 +44,13 @@ $(document).ready (function () {
 		// Prevent the link from being followed.
 		return false;
 	});
+	
+	$('#tildeling').click (function() {			// Show login dialog box
+		$('body > section').load ('pages/projectAllocation.php');
+		// Prevent the link from being followed.
+		return false;
+	});
+
 	// Displays all information about a single project
 	// $('.showProjectInfo').click (function() 
 	// {
