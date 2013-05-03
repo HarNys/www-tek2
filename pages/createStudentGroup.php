@@ -7,6 +7,19 @@
 		die ( 'Not logged in as student');
 	}
 
+	// See if group name is already taken
+	$sql = "SELECT *
+			FROM projectgroups
+			WHERE projectgroups.name = '".$_POST['groupName']."'
+			";
+	$sth = $db->prepare($sql);
+	$sth->execute();
+
+	if($sth->rowCount()) {
+		die(json_encode("group name taken"));
+	}
+
+
 	$sql = "INSERT INTO projectgroups 
 			SET name = '".$_POST['groupName']."'
 			";
