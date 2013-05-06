@@ -35,7 +35,7 @@
 			success : function (data) {
 				$('#studentlist').empty();
 				for (student in data) {
-					$('#studentlist').append ('<li><a id="'+data[student]["uid"]+'" class="addStudent" href="">Legg til </a>'
+					$('#studentlist').append ('<li><a id="'+data[student]["uid"]+'" class="addStudent" href="#" onclick="javascript:test('+data[student]["uid"]+')">Legg til </a>'
 												+data[student]["uid"]
 												+': '+data[student]['surename']
 												+', '+data[student]['givenname']
@@ -47,12 +47,12 @@
 		});
 	});
 
-	$('#students .addStudent').die();
-	$('#students #studentlist .addStudent').live('click', function(e) {
-		e.preventDefault();
-		window.alert("add");
+	function test(studentNumber) 
+	{
+		//e.preventDefault();
+		window.alert(studentNumber);
 		var uid = this.id;
-		$.post("pages/addGroupMember.php", { 'group' : group, 'uid' : uid }, function(result){
+		$.post("pages/addGroupMember.php", { 'group' : group, 'uid' : studentNumber}, function(result){
 			if(result == "in a group") {
 				window.alert("Studenten er allerede i en gruppe.");
 			} else {
@@ -60,7 +60,7 @@
 			}
 		}, "json");
 		return false;
-	});
+	}
 </script>
 
 <?php
