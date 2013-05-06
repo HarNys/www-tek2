@@ -23,6 +23,8 @@ json									// All scripts that return json data is here
 	login.php								// Script used to try to login as a HiG user (uses http://tvil.hig.no/json_services/checkUserLogin.php)
 	logout.php								// Script that logs out user
 	saveUpdatedProject.php					// Script used to store updated project information in the database
+	showStudentGroup.php					// Script used to add new members to a group and show information about the group. 
+											//		If not member of a group, show form to create group.
 	updateProjectStatus.php					// Script used to update status of a project
 	updateExternal.php						// Script used to store updated company information in the database
 LnF										// All look and feel related items
@@ -51,7 +53,7 @@ pages									// All content shown in the main part of the layout is loaded from
 	projectsOverview.php					// Shows all projects, including owner and short description
 	selectPrio.php							// Adds priority choice of project to the database. Accessed from availableProjects.php
 	showProjectInfo.php						// Shows all information about a single project
-	showStudentGroup.php					// Script used to show information about the group the user(student) is a member of. If not member of a group, show form to create group.
+	
 	welcome.html							// Contains the HTML that will be loaded upon page load if no user is logged in
 	welcomeExternal.html					// Contains the HTML that will be loaded upon page load is an external user is logged in
 tinymce									// All tinymce editor files
