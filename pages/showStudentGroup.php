@@ -93,13 +93,26 @@
 		$sth->execute();
 		if($sth->rowCount()) {
 			$project= $sth->fetch();
-
+			echo"<h3>Dere har fått tildelt dette prosjektet:</h3>";
 			echo"Tittel: '".$project['title']."'<br>";
 			echo"Alternativ tittel: '".$project['altTitle']."'<br>";
 			echo"Kort tittel: '".$project['shortTitle']."'<br>";
 			echo"</div>";
 		} else {
-			echo"Dere har ikke fått tildelt et prosjekt enda.";
+			$sql="	SELECT *
+					FROM projectrequest
+					INNER JOIN projects ON projects.id = projectrequest.projectid
+					WHERE projectrequest.groupid = '".$group['id']."'
+			";
+			$sth = $db->prepare($sql);
+			$sth->execute();
+
+			echo"Dere har ikke fått tildelt et prosjekt enda.</br>";
+			echo"<h3>Dere har prioritert dise prosjektene:</h3>";
+			foreach ($sth->fetchAll() as $project) {
+				echo"Tittel: '".$project['title']."'</br>";
+				echo"Prioritet: '".$project['priority']."'</br></br>";
+			}
 		}
 	}
 ?>

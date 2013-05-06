@@ -21,7 +21,7 @@
 
 
 	$sql = "INSERT INTO projectgroups 
-			SET name = '".$_POST['groupName']."'
+			SET name = '".$_POST['groupName']."', date = NOW()
 			";
 
 	$sth = $db->prepare($sql);
