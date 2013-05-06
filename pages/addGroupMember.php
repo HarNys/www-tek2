@@ -7,7 +7,6 @@
 		die ( 'Not logged in as student');
 	}
 
-
 	// See if student is already in a group
 	$sql = "SELECT *
 			FROM groupparticipants

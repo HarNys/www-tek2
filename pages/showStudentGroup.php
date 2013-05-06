@@ -11,15 +11,55 @@
 		}, "json");
 	});
 
-	$("#addGroupMemberForm .create").click(function(e) {
+	// $("#addGroupMemberForm .create").click(function(e) {
+	// 	e.preventDefault();
+	// 	$.post("pages/addGroupMember.php", $("#addGroupMemberForm").serialize(), function(result) {
+	// 		if(result == "in a group") {
+	// 			window.alert("Studenten er allerede i en gruppe.");
+	// 		} else {
+	// 			$('body > section').load ('pages/showStudentGroup.php');
+	// 		}
+	// 	}, "json");
+	// });
+
+	$('#studentSearchForm .submit').click(function(e) {
 		e.preventDefault();
-		$.post("pages/addGroupMember.php", $("#addGroupMemberForm").serialize(), function(result) {
+		window.alert("search");
+		var search = this.form.search.value;
+		$.ajax ({
+			url : 'https://tvil.hig.no/json_services/searchUser.php',
+			data : { 'search': '%'+search+'%' },
+			crossDomain : true,
+			type : 'POST',
+			dataType : 'json',
+			success : function (data) {
+				$('#studentlist').empty();
+					for (student in data) {
+						$('#studentlist').append ('<li><a id="'+data[student]["uid"]+'" class="addStudent" href="">Legg til </a>'
+													+data[student]["uid"]
+													+': '+data[student]['surename']
+													+', '+data[student]['givenname']
+													+'</li>');
+						$('#studentlist li').last().data ('uid', data[student]['uid']);
+					}
+				$('#students').slideDown();
+			}
+		});
+	});
+
+	$('#students .addStudent').die();
+	$('#students .addStudent').live('click', function(e) {
+		e.preventDefault();
+		window.alert("add");
+		var uid = this.id;
+		$.post("pages/addGroupMember.php", { 'group' : group, 'uid' : uid }, function(result){
 			if(result == "in a group") {
 				window.alert("Studenten er allerede i en gruppe.");
 			} else {
 				$('body > section').load ('pages/showStudentGroup.php');
 			}
 		}, "json");
+		return false;
 	});
 </script>
 
@@ -73,13 +113,18 @@
 			echo"".$member['participantid']."</br>";
 		}
 		echo"</p>";
-		echo"Legg til nytt medlem:</br>";
-		echo"<form id='addGroupMemberForm' method='post'>";
-		echo"<input type='hidden' name='groupId' value='".$group['id']."' />";
-		echo"<label for='memberId'>Studentnummer</label>";
-		echo"<input type='text' name='memberId' /></br>";
-		echo"<input type='submit' name='groupSubmit' class='create' value='Legg til' />";
+		echo"Søk etter nytt medlem:</br>";
+		echo"<form id='studentSearchForm'>";
+		echo"<input type='text' name='search' value='Søk etter student'></br>";
+		echo"<input type='button' class='submit' value='Søk'></br>";
 		echo"</form>";
+		echo"</br>";
+
+		echo"<div id='students'>";
+		echo"<ul id='studentlist'></ul>";
+		echo"</div>";
+
+
 		echo"</br>";
 		echo"<h2>Prosjektoversikt</h2>";
 
@@ -111,7 +156,15 @@
 			echo"<h3>Dere har prioritert dise prosjektene:</h3>";
 			foreach ($sth->fetchAll() as $project) {
 				echo"Tittel: '".$project['title']."'</br>";
-				echo"Prioritet: '".$project['priority']."'</br></br>";
+				echo"Prioritet: ";
+				if($project['priority']=='high'){
+					echo"Høy";
+				} else if ($project['priority']=='medium'){
+					echo"Medium";
+				} else if ($project['priority']=='low'){
+					echo"Lav";
+				}
+				echo"</br></br>";
 			}
 		}
 	}

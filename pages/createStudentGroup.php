@@ -19,7 +19,7 @@
 		die(json_encode("group name taken"));
 	}
 
-
+	// Create group
 	$sql = "INSERT INTO projectgroups 
 			SET name = '".$_POST['groupName']."', date = NOW()
 			";
@@ -27,7 +27,7 @@
 	$sth = $db->prepare($sql);
 	$sth->execute();
 
-
+	// If created, add user as member
 	if($sth->rowCount() != 0) {
 		$id = $db->lastInsertID();
 
