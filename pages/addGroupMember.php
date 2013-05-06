@@ -7,21 +7,19 @@
 		die ( 'Not logged in as student');
 	}
 
-	// See if student is already in a group
+	// Get the groupId
 	$sql = "SELECT *
 			FROM groupparticipants
-			WHERE groupparticipants.participantid = '".$_POST['memberId']."'
+			INNER JOIN projectgroups ON projectgroups.id = groupparticipants.groupid
+			WHERE groupparticipants.participantid = '".$_SESSION['uid']."'
 			";
 	$sth = $db->prepare($sql);
 	$sth->execute();
-
-	if($sth->rowCount()) {
-		die(json_encode("in a group"));
-	}
+	$group = $sth->fetch();
 
 	// Insert new member
 	$sql = "INSERT INTO groupparticipants
-			SET groupid = '".$_POST['groupId']."', participantid = '".$_POST['memberId']."'
+			SET groupid = '".$group['groupid']."', participantid = '".$_POST['memberId']."'
 			";
 	$sth = $db->prepare($sql);
 	$sth->execute();

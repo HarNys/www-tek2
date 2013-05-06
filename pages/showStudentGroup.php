@@ -1,4 +1,6 @@
 <script type="text/javascript">
+	// Parts of this code might have simmilarities to code witten by Dan Audne last year(2012), this is because he helped us when we got stuck.
+
 	$("#createGroupForm .create").click(function(e) {
 		e.preventDefault();
 		$.post("pages/createStudentGroup.php", $("#createGroupForm").serialize(), function(result) {
@@ -11,20 +13,9 @@
 		}, "json");
 	});
 
-	// $("#addGroupMemberForm .create").click(function(e) {
-	// 	e.preventDefault();
-	// 	$.post("pages/addGroupMember.php", $("#addGroupMemberForm").serialize(), function(result) {
-	// 		if(result == "in a group") {
-	// 			window.alert("Studenten er allerede i en gruppe.");
-	// 		} else {
-	// 			$('body > section').load ('pages/showStudentGroup.php');
-	// 		}
-	// 	}, "json");
-	// });
-
+	// Searches for students 
 	$('#studentSearchForm .submit').click(function(e) {
 		e.preventDefault();
-		window.alert("search");
 		var search = this.form.search.value;
 		$.ajax ({
 			url : 'https://tvil.hig.no/json_services/searchUser.php',
@@ -33,6 +24,7 @@
 			type : 'POST',
 			dataType : 'json',
 			success : function (data) {
+				// Create a list of results
 				$('#studentlist').empty();
 				for (student in data) {
 					$('#studentlist').append ('<li><a id="'+data[student]["uid"]+'" class="addStudent" href="#" onclick="javascript:test('+data[student]["uid"]+')">Legg til </a>'
@@ -47,12 +39,9 @@
 		});
 	});
 
-	function test(studentNumber) 
-	{
-		//e.preventDefault();
-		window.alert(studentNumber);
-		var uid = this.id;
-		$.post("pages/addGroupMember.php", { 'group' : group, 'uid' : studentNumber}, function(result){
+	// Inserts a student into the group when linked is clicked
+	function test(studentNumber) {
+		$.post("pages/addGroupMember.php", {'memberId' : studentNumber}, function(result){
 			if(result == "in a group") {
 				window.alert("Studenten er allerede i en gruppe.");
 			} else {
@@ -113,6 +102,7 @@
 			echo"".$member['participantid']."</br>";
 		}
 		echo"</p>";
+		// Form to search for studetns
 		echo"Søk etter nytt medlem:</br>";
 		echo"<form id='studentSearchForm'>";
 		echo"<input type='text' name='search' value='Søk etter student' ></br>";
@@ -120,6 +110,7 @@
 		echo"</form>";
 		echo"</br>";
 
+		// Result fo search
 		echo"<div id='students'>";
 		echo"<ul id='studentlist'></ul>";
 		echo"</div>";
@@ -136,7 +127,9 @@
 			";
 		$sth = $db->prepare($sql);
 		$sth->execute();
+
 		if($sth->rowCount()) {
+			// Show information about assigned project
 			$project= $sth->fetch();
 			echo"<h3>Dere har fått tildelt dette prosjektet:</h3>";
 			echo"Tittel: '".$project['title']."'<br>";
@@ -144,6 +137,7 @@
 			echo"Kort tittel: '".$project['shortTitle']."'<br>";
 			echo"</div>";
 		} else {
+			// Get the groups project requests
 			$sql="	SELECT *
 					FROM projectrequest
 					INNER JOIN projects ON projects.id = projectrequest.projectid
