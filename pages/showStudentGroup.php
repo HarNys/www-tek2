@@ -34,21 +34,21 @@
 			dataType : 'json',
 			success : function (data) {
 				$('#studentlist').empty();
-					for (student in data) {
-						$('#studentlist').append ('<li><a id="'+data[student]["uid"]+'" class="addStudent" href="">Legg til </a>'
-													+data[student]["uid"]
-													+': '+data[student]['surename']
-													+', '+data[student]['givenname']
-													+'</li>');
-						$('#studentlist li').last().data ('uid', data[student]['uid']);
-					}
+				for (student in data) {
+					$('#studentlist').append ('<li><a id="'+data[student]["uid"]+'" class="addStudent" href="">Legg til </a>'
+												+data[student]["uid"]
+												+': '+data[student]['surename']
+												+', '+data[student]['givenname']
+												+'</li>');
+					$('#studentlist li').last().data ('uid', data[student]['uid']);
+				}
 				$('#students').slideDown();
 			}
 		});
 	});
 
 	$('#students .addStudent').die();
-	$('#students .addStudent').live('click', function(e) {
+	$('#students #studentlist .addStudent').live('click', function(e) {
 		e.preventDefault();
 		window.alert("add");
 		var uid = this.id;
@@ -115,7 +115,7 @@
 		echo"</p>";
 		echo"Søk etter nytt medlem:</br>";
 		echo"<form id='studentSearchForm'>";
-		echo"<input type='text' name='search' value='Søk etter student'></br>";
+		echo"<input type='text' name='search' value='Søk etter student' ></br>";
 		echo"<input type='button' class='submit' value='Søk'></br>";
 		echo"</form>";
 		echo"</br>";
