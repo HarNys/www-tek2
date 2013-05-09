@@ -15,4 +15,3 @@ try {
     	die ('Kunne ikke koble til serveren : ' . $e->getMessage());
 	}
 ?>
-

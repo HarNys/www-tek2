@@ -1,4 +1,7 @@
 <?php
+
+	
+	echo "<a href='' onclick='javascript:downLoad()'>Last ned </a> alle prosjektene med status submitted eller reworked<br /><br />";
 	/**
 	 * Dialog used to create a new project.
 	 */
@@ -63,5 +66,12 @@
  		$('body > section').load('pages/showProjectInfo.php?id=' + this.id);
  		return false;
  	});
+
+
+	function downLoad()
+	{
+
+		$.get('json/download.php');
+	}
  
 </script>
